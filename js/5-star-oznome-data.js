@@ -364,12 +364,19 @@ function sendDataToServer(survey) {
   var ctx = $( ".survey-results canvas#surveyChart");
   updateSurveyChart(ctx, data);
   
+  var dummyData = [1.1, 3.3, 1.2, 3.3, 5];
+  var values = dummyData
+  let sum = values.reduce((previous, current) => current += previous);
+  let avg = sum / values.length;
+
+  $( ".survey-results div#5star-average").text("Score: " + avg);
+  
   //alert(resultAsString); //send Ajax request to your web server.
 };
 
 var processSurveyData = function(data) {
 	var label = "Dataset name";
-	if(data['question1']['dataset-name']) {
+	if('question1' in data && 'dataset-name' in data['question1']) {
 		label = data['question1']['dataset-name'];
 	}
 	var p1 = []
