@@ -369,7 +369,9 @@ function sendDataToServer(survey) {
   let sum = values.reduce((previous, current) => current += previous);
   let avg = sum / values.length;
 
-  $( ".survey-results div#5star-average").text("Score: " + avg);
+  //$( ".survey-results div#5star-average").text("Score: " + avg.toFixed(2));
+  var badgelink = "https://img.shields.io/badge/oznome%20data%20rating-" + avg.toFixed(2) + "%20stars-yellow.svg"
+  $( ".survey-results div#5star-average").append("<img src='"+badgelink+"'>");
   
   //alert(resultAsString); //send Ajax request to your web server.
 };
