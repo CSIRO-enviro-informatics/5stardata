@@ -5,6 +5,8 @@ var surveyJSON = {
    questions: [
     {
      type: "multipletext",
+     name: "question1",
+     title: "Enter dataset details",
      items: [
       {
        name: "dataset-name",
@@ -14,9 +16,7 @@ var surveyJSON = {
        name: "dataset-url",
        title: "URL"
       }
-     ],
-     name: "question1",
-     title: "Enter dataset details"
+     ]
     },
     {
      type: "radiogroup",
@@ -48,30 +48,17 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "0",
+       text: "Not citeable"
       },
       {
-       value: "three",
-       text: "third value"
-      }
-     ],
-     name: "question3",
-     title: "described and tagged, indexed in a well known system (can be general purpose or community specific) "
-    },
-    {
-     type: "radiogroup",
-     choices: [
-      "one",
-      {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "Citeable via local identifier"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "Citeable via stable persistent identifier"
       }
      ],
      name: "question4",
@@ -80,50 +67,83 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
-      }
-     ],
-     name: "question5",
-     title: "represented using a common or community-endorsed (i.e. standard) format - loadable"
-    }]
-  },	
-  {
-   name: "page2",
-   questions: [	
-    {
-     type: "radiogroup",
-     choices: [
-      "one",
-      {
-       value: "two",
-       text: "second value"
+       value: "2",
+       text: "internal system only"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "3",
+       text: "community wide system"
       }
      ],
-     name: "question6",
-     title: "structured using a discoverable, community-endorsed (standard?) schema or data model - useable"
+     name: "question3",
+     title: "Described and tagged, indexed in a well known system (can be general purpose or community specific) "
     },
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "informal format"
+      },
+      {
+       value: "3",
+       text: "community-agreed format"
+      }
+     ],
+     name: "question5",
+     title: "Represented using a common or community-endorsed (i.e. standard) format - loadable"
+    }
+   ]
+  },
+  {
+   name: "page2",
+   questions: [
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "no schema"
+      },
+      {
+       value: "2",
+       text: "bespoke schema or data model"
+      },
+      {
+       value: "3",
+       text: "internally shared schema or data model"
+      },
+      {
+       value: "4",
+       text: "community-shared schema or data model "
+      }
+     ],
+     name: "question6",
+     title: "Structured using a discoverable, community-endorsed (standard?) schema or data model - useable"
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "no"
+      },
+      {
+       value: "2",
+       text: "Accessible via bespoke API"
+      },
+      {
+       value: "3",
+       text: "Accessible via well-described standard API"
       }
      ],
      name: "question7",
@@ -132,14 +152,17 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "No"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "Partial"
+      },
+      {
+       value: "3",
+       text: "Yes"
       }
      ],
      name: "question8",
@@ -148,35 +171,41 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "Some elements are linked"
+      },
+      {
+       value: "3",
+       text: "All elements are linked"
       }
      ],
      name: "question9",
-     title: "internal elements (e.g. column definitions, units of measure) are linked to accessible (standard) definitions - comprehensible "
-    }]
+     title: "Internal elements (e.g. column definitions, units of measure) are linked to accessible (standard) definitions - comprehensible "
+    }
+   ]
   },
   {
-   name: "page4",
+   name: "page3",
    questions: [
-	
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "partial"
+      },
+      {
+       value: "3",
+       text: "yes"
       }
      ],
      name: "question10",
@@ -185,14 +214,17 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "yes"
+      },
+      {
+       value: "3",
+       text: "yes and backed by institution as a trusted repository"
       }
      ],
      name: "question11",
@@ -201,14 +233,13 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "yes"
       }
      ],
      name: "question12",
@@ -217,14 +248,17 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "partial provenance"
+      },
+      {
+       value: "3",
+       text: "full provenance"
       }
      ],
      name: "question13",
@@ -233,14 +267,13 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "one",
+       text: "no license"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "two",
+       text: "clear license specified"
       }
      ],
      name: "question14",
@@ -249,14 +282,13 @@ var surveyJSON = {
     {
      type: "radiogroup",
      choices: [
-      "one",
       {
-       value: "two",
-       text: "second value"
+       value: "1",
+       text: "no information"
       },
       {
-       value: "three",
-       text: "third value"
+       value: "2",
+       text: "information available"
       }
      ],
      name: "question15",
@@ -266,7 +298,7 @@ var surveyJSON = {
    title: "Dataset characteristics"
   },
   {
-   name: "page5",
+   name: "page4",
    questions: [
     {
      type: "radiogroup",
