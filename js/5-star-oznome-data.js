@@ -22,23 +22,23 @@ var surveyJSON = {
      type: "radiogroup",
      choices: [
       {
-       value: "no",
+       value: "1",
        text: "No"
       },
       {
-       value: "sneaker-net",
+       value: "2",
        text: "Sneaker Net"
       },
       {
-       value: "data-download",
+       value: "3",
        text: "Data download"
       },
       {
-       value: "web-service",
+       value: "4",
        text: "Web service (bespoke)"
       },
       {
-       value: "standard-web-service",
+       value: "5",
        text: "Web service (standardised - e.g. OGC)"
       }
      ],
@@ -49,15 +49,15 @@ var surveyJSON = {
      type: "radiogroup",
      choices: [
       {
-       value: "0",
+       value: "1",
        text: "Not citeable"
       },
       {
-       value: "1",
+       value: "2",
        text: "Citeable via local identifier"
       },
       {
-       value: "2",
+       value: "3",
        text: "Citeable via stable persistent identifier"
       }
      ],
@@ -268,11 +268,11 @@ var surveyJSON = {
      type: "radiogroup",
      choices: [
       {
-       value: "one",
+       value: "1",
        text: "no license"
       },
       {
-       value: "two",
+       value: "2",
        text: "clear license specified"
       }
      ],
@@ -388,6 +388,7 @@ var survey = new Survey.Survey(surveyJSON, "surveyContainer");
 
 function sendDataToServer(survey) {
   $( ".survey-results div#5star-average").empty();
+  $( ".survey-results div.dataset-title").empty();
   var resultAsString = JSON.stringify(survey.data);
   var datastr = "text/json;charset=utf-8," + encodeURIComponent(resultAsString);   
   
@@ -405,12 +406,23 @@ function sendDataToServer(survey) {
   
   
   */
-  insertStarRatings(dummyData);   
+  var dataset_name = "";
+  if('question1' in survey.data && 'dataset-name' in survey.data['question1']) {
+		dataset_name = survey.data['question1']['dataset-name'];
+  }
+	
+  var arrRating = calculateRatings(survey.data);
+  avg = calcAverage(arrRating);
+  
+  //insertStarRatings(dummyData);   
+  insertStarRatings(arrRating);   
   
   //$( ".survey-results div#5star-average").text("Score: " + avg.toFixed(2));
   var badgelink = "https://img.shields.io/badge/oznome%20data%20rating-" + avg.toFixed(2) + "%20stars-yellow.svg"
   $( ".survey-results div#5star-average").append("<img src='"+badgelink+"'>");
+  $( ".survey-results div.dataset-title").append('<h3>'+dataset_name+'</h3>');
 
+  
   $(".survey-download ").html('<a href="data:' + datastr + '" download="data.json">download JSON</a>');
   $(".survey-questions ").append("<input id=\"btnreRun\" type=\"button\" onclick='reRunSurvey();' value=\"Modify\">");
   
@@ -418,13 +430,142 @@ function sendDataToServer(survey) {
 };
 
 var insertStarRatings = function (arrRating) {
-	var arrRatingCategories = ['findable', 'accessible', 'interoperable', 'reusable', 'connected'];
+	var arrRatingCategories = ['findable', 'accessible', 'interoperable', 'reusable', 'trusted'];
     
 	$.each(arrRatingCategories, function(i, category) {
 		var id = category + "-rating";
 		$("#"+id).rateit('value', arrRating[i]);
 	});
 	
+}
+
+var calculateRatings = function(data) {
+	var findable = [];
+	var accessible = [];
+	var interoperable = [];
+	var reusable = [];
+	//var connectable = [];
+	var trusted = [];
+
+	if('question1' in data && 'dataset-name' in data['question1']) {
+		label = data['question1']['dataset-name'];
+	}
+	
+	if('question2' in data) {
+		accessible.push(scaleRatingsUpFrom(data['question2'],5));		
+	}
+	if('question3' in data) {
+		findable.push(scaleRatingsUpFrom(data['question3'],3)); //scale up from 3 options
+	}
+	if('question4' in data) { //scale up from 3 options
+		reusable.push(scaleRatingsUpFrom(data['question4'],3));
+		findable.push(scaleRatingsUpFrom(data['question4'],3)); 
+	}
+	if('question5' in data) { //scale up from 3 options
+		interoperable.push(scaleRatingsUpFrom(data['question5'],3));		
+	}
+	if('question6' in data) { //scale up from 4 options
+		interoperable.push(scaleRatingsUpFrom(data['question6'],4));
+		reusable.push(scaleRatingsUpFrom(data['question6'],4));
+	}
+	if('question7' in data) { //scale up from 3 options
+		accessible.push(scaleRatingsUpFrom(data['question7'],3));		
+	}
+	if('question8' in data) { //scale up from 3 options
+		accessible.push(scaleRatingsUpFrom(data['question8'],3));		
+	}
+	if('question9' in data) { //scale up from 3 options
+		interoperable.push(scaleRatingsUpFrom(data['question9'],3));
+	}
+	if('question10' in data) { //scale up from 3 options
+		interoperable.push(scaleRatingsUpFrom(data['question10'],3));
+	}
+	if('question11' in data) { //scale up from 3 options
+		trusted.push(scaleRatingsUpFrom(data['question11'],3));
+	}
+	if('question12' in data) { //scale up from 2 options
+		trusted.push(scaleRatingsUpFrom(data['question12'],2));
+	}
+	if('question13' in data) { //scale up from 3 options
+		reusable.push(scaleRatingsUpFrom(data['question13'],3));
+	}
+	if('question14' in data) { //scale up from 2 options
+		reusable.push(scaleRatingsUpFrom(data['question14'],2));
+	}
+	if('question15' in data) { //scale up from 2 options
+		trusted.push(scaleRatingsUpFrom(data['question15'],2));
+	}
+	if('question16' in data) {
+		
+	}
+	if('question17' in data) {
+	}
+
+	//f(2) a(3) i(4) r(3) c(0) t(3)
+    var f_avg = calcAverage(findable);
+	var a_avg = calcAverage(accessible);
+	var i_avg = calcAverage(interoperable);
+	var r_avg = calcAverage(reusable);
+	var t_avg = calcAverage(trusted);	
+		
+	return [f_avg, a_avg, i_avg, r_avg, t_avg];
+	
+}
+
+var calcAverage = function (values) {
+	let sum = values.reduce((previous, current) => current += previous);
+    let avg = sum / values.length;
+	return avg;
+}
+
+var scaleRatingsUpFrom = function (rating, maxNumOptions) {
+	var newVal = 0;
+	var curr = parseInt(rating);
+	if(maxNumOptions == 2) {
+		newVal = curr;
+		if(curr == 1) 
+			newVal = 0;
+		
+		if(curr == 2) 
+			newVal = 5;
+		
+	}
+	if(maxNumOptions == 3) {
+		newVal = curr;
+		if(curr == 1) 
+			newVal = 0;
+		if(curr == 2) 
+			newVal = 2.5;		
+		if(curr == 3) 
+			newVal = 5;				
+	}
+	if(maxNumOptions == 4) {
+		newVal = curr;
+		if(curr == 1) 
+			newVal = 0;
+		if(curr == 2) 
+			newVal = 2;		
+		if(curr == 3) 
+			newVal = 3.5;	
+		if(curr == 4) 
+			newVal = 5;	
+	}
+	
+	if(maxNumOptions == 5) {
+		newVal = curr;
+		if(curr == 1) 
+			newVal = 0;
+		if(curr == 2) 
+			newVal = 2;		
+		if(curr == 3) 
+			newVal = 3;	
+		if(curr == 4) 
+			newVal = 4;
+		if(curr == 5) 
+			newVal = 5;
+	}
+
+	return newVal;
 }
 
 var processSurveyData = function(data) {
