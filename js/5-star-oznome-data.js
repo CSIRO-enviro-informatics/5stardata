@@ -383,30 +383,49 @@ var surveyJSON = {
 
 Survey.Survey.cssType = "bootstrap";
 
-
 var survey = new Survey.Survey(surveyJSON, "surveyContainer");
-//Use onComplete event to save the data           
-survey.onComplete.add(sendDataToServer);
+
 
 function sendDataToServer(survey) {
+  $( ".survey-results div#5star-average").empty();
   var resultAsString = JSON.stringify(survey.data);
-  
-  $( ".survey-results pre").text(resultAsString)
-  var data = processSurveyData(survey.data);
-  var ctx = $( ".survey-results canvas#surveyChart");
-  updateSurveyChart(ctx, data);
+  var datastr = "text/json;charset=utf-8," + encodeURIComponent(resultAsString);   
   
   var dummyData = [1.1, 3.3, 1.2, 3.3, 5];
   var values = dummyData
   let sum = values.reduce((previous, current) => current += previous);
   let avg = sum / values.length;
-
+  
+  //$( ".survey-results pre").text(resultAsString)
+  
+  /*  Commenting out Chart functionality
+  var data = processSurveyData(survey.data);
+  var ctx = $( ".survey-results canvas#surveyChart");
+  updateSurveyChart(ctx, data);
+  
+  
+  */
+  insertStarRatings(dummyData);   
+  
   //$( ".survey-results div#5star-average").text("Score: " + avg.toFixed(2));
   var badgelink = "https://img.shields.io/badge/oznome%20data%20rating-" + avg.toFixed(2) + "%20stars-yellow.svg"
   $( ".survey-results div#5star-average").append("<img src='"+badgelink+"'>");
+
+  $(".survey-download ").html('<a href="data:' + datastr + '" download="data.json">download JSON</a>');
+  $(".survey-questions ").append("<input id=\"btnreRun\" type=\"button\" onclick='reRunSurvey();' value=\"Modify\">");
   
   //alert(resultAsString); //send Ajax request to your web server.
 };
+
+var insertStarRatings = function (arrRating) {
+	var arrRatingCategories = ['findable', 'accessible', 'interoperable', 'reusable', 'connected'];
+    
+	$.each(arrRatingCategories, function(i, category) {
+		var id = category + "-rating";
+		$("#"+id).rateit('value', arrRating[i]);
+	});
+	
+}
 
 var processSurveyData = function(data) {
 	var label = "Dataset name";
@@ -451,3 +470,23 @@ var updateSurveyChart = function(ctx, data) {
 	
 	return myRadarChart;
 }
+
+function reRunSurvey() {
+	var data = survey.data;
+    survey.clear();
+	//$('#surveyContainer').empty();
+	//survey = new Survey.Survey(surveyJSON, "surveyContainer");	
+    //survey.onComplete.add(sendDataToServer);
+	survey.data = data;
+	
+    survey.render('survey');
+	
+	$("#btnreRun").remove();
+}
+
+$(this).ready(function() {
+
+	//Use onComplete event to save the data           
+	survey.onComplete.add(sendDataToServer);
+
+});

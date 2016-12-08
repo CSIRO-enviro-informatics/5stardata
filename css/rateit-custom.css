@@ -1,0 +1,9 @@
+.custom .rateit-selected{
+    background: url(star.gif) left -32px;
+	color: yellow;
+}
+
+.custom .rateit-hover{
+    background: url(star.gif) left -16px;
+	color: yellow;
+}

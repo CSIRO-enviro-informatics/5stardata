@@ -47,7 +47,7 @@ html {
 
 
 .intro-section {
-    height: 70%;
+    height: 60%;
     padding-top: 150px;
     text-align: center;
     background: #fff;
@@ -78,4 +78,6 @@ html {
 
 .survey-questions {
 	text-align: left;
+	max-height: 550px;
+	overflow-y: scroll; 
 }
