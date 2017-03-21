@@ -78,6 +78,5 @@ html {
 
 .survey-questions {
 	text-align: left;
-	max-height: 550px;
-	overflow-y: scroll; 
+	min-height: 550px;
 }
