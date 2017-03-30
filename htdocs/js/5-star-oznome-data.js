@@ -5,18 +5,19 @@ var surveyJSON = {
    questions: [
     {
      type: "multipletext",
-     name: "question1",
-     title: "Enter dataset details",
+     isRequired: true,
      items: [
       {
        name: "dataset-name",
-       title: "Name"
+       title: "Dataset name or title"
       },
       {
        name: "dataset-url",
        title: "URL"
       }
-     ]
+     ],
+     name: "question1",
+     title: "Dataset identity"
     },
     {
      type: "radiogroup",
@@ -27,23 +28,33 @@ var surveyJSON = {
       },
       {
        value: "2",
-       text: "Sneaker Net"
+       text: "By individual arrangement"
       },
       {
        value: "3",
-       text: "Data download"
+       text: "File download"
+      },
+      {
+       value: "3.5",
+       text: "Institutional or community repository"
       },
       {
        value: "4",
-       text: "Web service (bespoke)"
+       text: "Bespoke web service (informal API)"
+      },
+      {
+       value: "4.5",
+       text: "Bespoke web service (OpenAPI/Swagger)"
       },
       {
        value: "5",
-       text: "Web service (standardised - e.g. OGC)"
+       text: "Standard web service API (e.g. OGC)"
       }
      ],
+     commentText: "5-star published+hosted",
+     isRequired: true,
      name: "question2",
-     title: "Is the data accessible to users other than the creator or owner?"
+     title: "Published - is the data accessible to users other than the creator or owner?"
     },
     {
      type: "radiogroup",
@@ -54,15 +65,48 @@ var surveyJSON = {
       },
       {
        value: "2",
-       text: "Citeable via local identifier"
+       text: "Local identifier"
+      },
+      {
+       value: "2.5",
+       text: "Web address (URL - not guaranteed stable)"
       },
       {
        value: "3",
-       text: "Citeable via stable persistent identifier"
+       text: "Persistent web identifier (URI)"
       }
      ],
+     commentText: "5-star citeable",
      name: "question4",
-     title: "Denoted using a stable, persistent identifier"
+     title: "Citeable - denoted using a formal identifier"
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "0",
+       text: "No metadata"
+      },
+      {
+       value: "2",
+       text: "Abstract and keywords"
+      },
+      {
+       value: "3",
+       text: "Basic metadata (e.g. Dublin Core)"
+      },
+      {
+       value: "4",
+       text: "Specialized metadata (e.g. Darwin Core, ISO 19115/19139, schema.org scientific data profile)"
+      },
+      {
+       value: "5",
+       text: "Rich metadata using multiple standard RDF vocabularies (e.g. DCAT, PROV, ADMS, GeoDCAT, FOAF, ORG, GeoSPARQL)"
+      }
+     ],
+     commentText: "5-star described",
+     name: "question3.5",
+     title: "Described - tagged with metadata"
     },
     {
      type: "radiogroup",
@@ -73,36 +117,23 @@ var surveyJSON = {
       },
       {
        value: "2",
-       text: "internal system only"
+       text: "local or internal system only"
       },
       {
        value: "3",
-       text: "community wide system"
+       text: "community wide or jurisdictional system"
+      },
+      {
+       value: "4",
+       text: "highly ranked in general purpose index (Google, Bing etc)"
       }
      ],
+     commentText: "5-star findable",
      name: "question3",
-     title: "Described and tagged, indexed in a well known system (can be general purpose or community specific) "
-    },
-    {
-     type: "radiogroup",
-     choices: [
-      {
-       value: "1",
-       text: "no"
-      },
-      {
-       value: "2",
-       text: "informal format"
-      },
-      {
-       value: "3",
-       text: "community-agreed format"
-      }
-     ],
-     name: "question5",
-     title: "Represented using a common or community-endorsed (i.e. standard) format - loadable"
+     title: "Findable - indexed in a discovery system "
     }
-   ]
+   ],
+   title: "... publication and indexing"
   },
   {
    name: "page2",
@@ -112,157 +143,85 @@ var surveyJSON = {
      choices: [
       {
        value: "1",
-       text: "no schema"
+       text: "bespoke format (text, binary)"
       },
       {
        value: "2",
-       text: "bespoke schema or data model"
+       text: "one standard format, denoted by a MIME-type"
       },
       {
        value: "3",
-       text: "internally shared schema or data model"
+       text: "multiple standard formats"
+      }
+     ],
+     commentText: "5-star loadable",
+     name: "question5",
+     title: "Loadable - represented using a common or community-endorsed (i.e. standard) format"
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "no formal schema"
+      },
+      {
+       value: "2",
+       text: "explicit schema or data model, formalized in DDL, XSD, DDI, RDFS, JSON-Schema, data-package or similar"
       },
       {
        value: "4",
-       text: "community-shared schema or data model "
+       text: "community-shared schema or data model , available from a standard location"
       }
      ],
      name: "question6",
-     title: "Structured using a discoverable, community-endorsed (standard?) schema or data model - useable"
+     title: "Useable - structured using a discoverable, community-endorsed (standard?) schema or data model"
     },
     {
      type: "radiogroup",
      choices: [
       {
        value: "1",
-       text: "no"
+       text: "local field codes or labels"
+      },
+      {
+       value: "1.1",
+       text: "labels with full text explanations"
+      },
+      {
+       value: "1.2",
+       text: "community standard labels (e.g. CF Conventions, UCUM units)"
       },
       {
        value: "2",
-       text: "Accessible via bespoke API"
+       text: "some fields linked to externally managed definitions"
       },
       {
        value: "3",
-       text: "Accessible via well-described standard API"
-      }
-     ],
-     name: "question7",
-     title: "Accessible using a well-described API - queriable, sub-settable"
-    },
-    {
-     type: "radiogroup",
-     choices: [
-      {
-       value: "1",
-       text: "No"
-      },
-      {
-       value: "2",
-       text: "Partial"
-      },
-      {
-       value: "3",
-       text: "Yes"
-      }
-     ],
-     name: "question8",
-     title: "REST API - web application-compatible"
-    },
-    {
-     type: "radiogroup",
-     choices: [
-      {
-       value: "1",
-       text: "no"
-      },
-      {
-       value: "2",
-       text: "Some elements are linked"
-      },
-      {
-       value: "3",
-       text: "All elements are linked"
+       text: "all fields linked to standard, externally managed definitions"
       }
      ],
      name: "question9",
-     title: "Internal elements (e.g. column definitions, units of measure) are linked to accessible (standard) definitions - comprehensible "
-    }
-   ]
-  },
-  {
-   name: "page3",
-   questions: [
-    {
-     type: "radiogroup",
-     choices: [
-      {
-       value: "1",
-       text: "no"
-      },
-      {
-       value: "2",
-       text: "partial"
-      },
-      {
-       value: "3",
-       text: "yes"
-      }
-     ],
-     name: "question10",
-     title: "Linked using externally defined identifiers (e.g. URIs) - crawlable"
+     title: "Comprehensible - supported with unambiguous definitions for all internal elements"
     },
     {
      type: "radiogroup",
      choices: [
       {
        value: "1",
-       text: "no"
+       text: "no links"
       },
       {
        value: "2",
-       text: "yes"
+       text: "in-bound links from a catalogue or landing-page"
       },
       {
        value: "3",
-       text: "yes and backed by institution as a trusted repository"
+       text: "out-bound links to related data and definitions"
       }
      ],
-     name: "question11",
-     title: "Part of a regular data collection program or series, with a clear maintenance and update schedule"
-    },
-    {
-     type: "radiogroup",
-     choices: [
-      {
-       value: "1",
-       text: "no"
-      },
-      {
-       value: "2",
-       text: "yes"
-      }
-     ],
-     name: "question12",
-     title: "Data-quality assessment available"
-    },
-    {
-     type: "radiogroup",
-     choices: [
-      {
-       value: "1",
-       text: "no"
-      },
-      {
-       value: "2",
-       text: "partial provenance"
-      },
-      {
-       value: "3",
-       text: "full provenance"
-      }
-     ],
-     name: "question13",
-     title: "Origin and workflow that produced the data is available - provenance"
+     name: "question7",
+     title: "Linked - to other data and definitions using public identifiers (e.g. URIs)"
     },
     {
      type: "radiogroup",
@@ -273,29 +232,104 @@ var surveyJSON = {
       },
       {
        value: "2",
-       text: "clear license specified"
+       text: "license described in text"
+      },
+      {
+       value: "2.5",
+       text: "link to a standard license (e.g. Creative Commons)"
       }
      ],
      name: "question14",
-     title: "Conditions for re-use are available and clearly expressed - licensed "
+     title: "Licensed - conditions for re-use are available and clearly expressed"
+    }
+   ],
+   title: "... linked and useable"
+  },
+  {
+   name: "page3",
+   questions: [
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "once-off dump, no ongoing commitment"
+      },
+      {
+       value: "2",
+       text: "best effort, project website"
+      },
+      {
+       value: "3",
+       text: "public or institutional repository (e.g. CKAN, GitHub)"
+      },
+      {
+       value: "4",
+       text: "certified repository"
+      }
+     ],
+     name: "question8",
+     title: "Curated - commitment to ensuring the data is available long term"
     },
     {
      type: "radiogroup",
      choices: [
       {
        value: "1",
-       text: "no information"
+       text: "one-time dataset"
       },
       {
        value: "2",
-       text: "information available"
+       text: "part of series - occasional/irregular update"
+      },
+      {
+       value: "3",
+       text: "part of series - regular scheduled updates"
+      }
+     ],
+     name: "question11",
+     title: "Updated - part of a regular data collection program or series, with clear maintenance arrangements and update schedule"
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "no quality or lineage information"
+      },
+      {
+       value: "2",
+       text: "text lineage statement"
+      },
+      {
+       value: "2.5",
+       text: "formal provenance trace (e.g. PROV-O)"
+      }
+     ],
+     name: "question12",
+     title: "Assessable - accompanied by, or linked to, a data-quality assessment and description of the origin and workflow that produced the data"
+    },
+    {
+     type: "radiogroup",
+     choices: [
+      {
+       value: "1",
+       text: "no information about usage"
+      },
+      {
+       value: "2",
+       text: "usage statistics available"
+      },
+      {
+       value: "2.5",
+       text: "Clearly endorsed by reputable organization or framework"
       }
      ],
      name: "question15",
-     title: "Information about how the data has been used, and how many times"
+     title: "Trusted -  accompanied by, or linked to, information about how the data has been used, by whom, and how many times"
     }
    ],
-   title: "Dataset characteristics"
+   title: "... maintenance and provenance"
   },
   {
    name: "page4",
@@ -462,26 +496,27 @@ var calculateRatings = function(data) {
 		findable.push(scaleRatingsUpFrom(data['question4'],3)); 
 	}
 	if('question5' in data) { //scale up from 3 options
-		interoperable.push(scaleRatingsUpFrom(data['question5'],3));		
+		reusable.push(scaleRatingsUpFrom(data['question5'],3));
+		findable.push(scaleRatingsUpFrom(data['question5'],3)); 		
 	}
 	if('question6' in data) { //scale up from 4 options
-		interoperable.push(scaleRatingsUpFrom(data['question6'],4));
-		reusable.push(scaleRatingsUpFrom(data['question6'],4));
+		interoperable.push(scaleRatingsUpFrom(data['question6'],4));		
 	}
 	if('question7' in data) { //scale up from 3 options
-		accessible.push(scaleRatingsUpFrom(data['question7'],3));		
+		interoperable.push(scaleRatingsUpFrom(data['question7'],4));
+		reusable.push(scaleRatingsUpFrom(data['question7'],4));	
 	}
 	if('question8' in data) { //scale up from 3 options
-		accessible.push(scaleRatingsUpFrom(data['question8'],3));		
+		interoperable.push(scaleRatingsUpFrom(data['question8'],3));		
 	}
 	if('question9' in data) { //scale up from 3 options
 		interoperable.push(scaleRatingsUpFrom(data['question9'],3));
 	}
 	if('question10' in data) { //scale up from 3 options
-		interoperable.push(scaleRatingsUpFrom(data['question10'],3));
+		reusable.push(scaleRatingsUpFrom(data['question10'],3));
 	}
 	if('question11' in data) { //scale up from 3 options
-		trusted.push(scaleRatingsUpFrom(data['question11'],3));
+		accessible.push(scaleRatingsUpFrom(data['question11'],3));
 	}
 	if('question12' in data) { //scale up from 2 options
 		trusted.push(scaleRatingsUpFrom(data['question12'],2));
@@ -490,10 +525,10 @@ var calculateRatings = function(data) {
 		reusable.push(scaleRatingsUpFrom(data['question13'],3));
 	}
 	if('question14' in data) { //scale up from 2 options
-		reusable.push(scaleRatingsUpFrom(data['question14'],2));
+		trusted.push(scaleRatingsUpFrom(data['question14'],2));
 	}
 	if('question15' in data) { //scale up from 2 options
-		trusted.push(scaleRatingsUpFrom(data['question15'],2));
+		
 	}
 	if('question16' in data) {
 		

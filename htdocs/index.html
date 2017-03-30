@@ -20,6 +20,9 @@
 	<link href="js/rateit.css" rel="stylesheet" type="text/css">
     <link href="css/rateit-custom.css" rel="stylesheet" type="text/css">
 
+	<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto|Lato|Montserrat|Lora|Open+Sans" rel="stylesheet">
+
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,6 +32,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
     <link href="surveyjs/survey.css" type="text/css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>	
+
 	<script src="surveyjs/survey.ko.min.js"></script>
 
 </head>
@@ -41,17 +45,11 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <span id="title" class="navbar-brand"><a href="#page-top"><img src="img/logo.png" height="50" width="50"></a><a id="navbar-brand-title" class="page-scroll" href="#page-top">5 ★ OZNOME DATA</a></span>
+                <span id="title" class="navbar-brand"><a href="#page-top"><img src="img/csiro_logo.jpg" height="50" width="50"></a><a id="navbar-brand-title" class="page-scroll" href="#page-top">5 ★ OZNOME DATA</a></span>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="collapse navbar-collapse nav navbar-right navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
@@ -61,10 +59,10 @@
                         <a class="page-scroll" href="#self-assessment-tool">Self-assessment tool</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about-oznome">About OZNOME</a>
+                        <a href="#" data-toggle="modal" data-target="#aboutOzNome">About OzNome</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
+                        <a href="https://research.csiro.au/oznome/contact/">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -107,16 +105,16 @@
                 </div>
             </div>
 			<div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-7">
 				
-				<div class="panel panel-default">
+				<div class="panel panel-default questionaire-panel">
 					<div class="panel-heading">Questionaire</div>
 						<div class="panel-body survey-questions">
 							<div id="surveyContainer"></div>
 						</div>
 					</div>				
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5">
 				<div class="panel panel-default">
 					<div class="panel-heading">Results</div>
 						<div class="panel-body survey-results">
@@ -146,18 +144,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>About OzNome</h1>
-					<p><a href="https://research.csiro.au/oznome">OzNome</a> is a CSIRO-led initiative to enhance and connect information infrastructures across the Australian economy. Outputs from the OzNome Initiative will enable researchers, industry and key partners to achieve productivity gains around their discovery, access and use of data. Tools and methods developed through the OzNome initiative will provide access to self-organising, trusted, curated and well governed data ecosystems. </p>
-					
-					<a class="btn btn-default page-scroll" href="http://research.csiro.au/oznome">Find out more about OzNome</a>
-					
-					<a class="btn btn-default page-scroll" href="mailto:oznome-lw@csiro.au?5-star OzNome Data">Contact us</a>
-
+                    
                 </div>
             </div>
         </div>
     </section>
 
+<div class="modal fade aboutOzNome" tabindex="-1" role="dialog" aria-labelledby="aboutOzNome" aria-hidden="true" id="aboutOzNome">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body about-oznome">
+        <div class="about-oznome-header">
+		   <div class="inner"><img src="img/logo.png" height="60" width="60"></div>
+		   <div class="inner"><h1>About OzNome</h1></div>
+		</div>
+		<div class="about-oznome-body">
+			<p><a href="https://research.csiro.au/oznome">OzNome</a> is a CSIRO-led initiative to enhance and connect information infrastructures across the Australian economy. Outputs from the OzNome Initiative will enable researchers, industry and key partners to achieve productivity gains around their discovery, access and use of data. Tools and methods developed through the OzNome initiative will provide access to self-organising, trusted, curated and well governed data ecosystems. </p>
+		</div>			
+		<div class="about-oznome-cta">
+		  <a class="btn btn-default page-scroll" href="http://research.csiro.au/oznome">Find out more about OzNome</a>
+		  <a class="btn btn-default page-scroll" href="https://research.csiro.au/oznome/contact/">Contact us</a>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	
     <!-- Contact Section -->
 <!--
     <section id="contact" class="contact-section">
@@ -170,6 +185,53 @@
         </div>
     </section>
 -->
+
+<div class="modal fade termsAndConditions" tabindex="-1" role="dialog" aria-labelledby="termsAndConditions" aria-hidden="true" id="termsAndConditions">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body ">
+        <div class="tc-header">
+		   <div class="inner"><h1>Terms and conditions</h1></div>
+		</div>
+
+               <p>We grant you access to the 5-star OzNome Data Tool on the following basis:</p>
+               <ol>
+                 <li>Your access may be ended at any time;</li>
+                 <li>You must act in a manner consistent with maintaining trust and respect among users;</li>
+                 <li>You must comply with any conditions that apply to information or data provided to you;</li>
+                 <li>You are responsible for your own use of 5-star OzNome Data Tool, including any use of content or data accessed from it or any transaction arising from your use of 5-star OzNome Data Tool ;</li>
+                 <li>Any material you submit will not be made available to other users. You must not upload anything illegal, inappropriate, offensive or disruptive to other users;</li>
+                 <li>No personal information is collected via this tool. It is simply a self-assessment tool. Any other information will be used for the purposes provided and treated in a manner consistent with Australian privacy laws;</li>
+                 <li>We may use de-identified data for research purposes;</li>
+                 <li>You must not use the CSIRO name or logo to claim any association with CSIRO without prior written approval from us.</li>
+                </ol>
+                <p>By accessing and continuing to access 5-star OzNome Data Tool, you accept and agree to comply with these Terms and Conditions of Use
+                </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<footer class="footer">
+  <div class="container">
+     <div class="row">
+          <a href="http://www.csiro.au/en/About/Footer/Copyright">&copy;2017 CSIRO</a>.
+          | 
+          <a href="#" data-toggle="modal" data-target="#termsAndConditions">Terms &amp; Conditions</a>
+          |
+          <a href="http://www.csiro.au/en/About/Footer/Legal-notice">Disclaimer</a>
+          |
+          This work is an part of the <a href="https://research.csiro.au/oznome">OzNome initiative</a> seeking to connect up information across Australia.
+          |
+          <a href="https://research.csiro.au/oznome/contact/">Contact us</a>
+     </div>
+  </div>
+</footer>
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
