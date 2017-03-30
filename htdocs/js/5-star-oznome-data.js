@@ -496,26 +496,27 @@ var calculateRatings = function(data) {
 		findable.push(scaleRatingsUpFrom(data['question4'],3)); 
 	}
 	if('question5' in data) { //scale up from 3 options
-		interoperable.push(scaleRatingsUpFrom(data['question5'],3));		
+		reusable.push(scaleRatingsUpFrom(data['question5'],3));
+		findable.push(scaleRatingsUpFrom(data['question5'],3)); 		
 	}
 	if('question6' in data) { //scale up from 4 options
-		interoperable.push(scaleRatingsUpFrom(data['question6'],4));
-		reusable.push(scaleRatingsUpFrom(data['question6'],4));
+		interoperable.push(scaleRatingsUpFrom(data['question6'],4));		
 	}
 	if('question7' in data) { //scale up from 3 options
-		accessible.push(scaleRatingsUpFrom(data['question7'],3));		
+		interoperable.push(scaleRatingsUpFrom(data['question7'],4));
+		reusable.push(scaleRatingsUpFrom(data['question7'],4));	
 	}
 	if('question8' in data) { //scale up from 3 options
-		accessible.push(scaleRatingsUpFrom(data['question8'],3));		
+		interoperable.push(scaleRatingsUpFrom(data['question8'],3));		
 	}
 	if('question9' in data) { //scale up from 3 options
 		interoperable.push(scaleRatingsUpFrom(data['question9'],3));
 	}
 	if('question10' in data) { //scale up from 3 options
-		interoperable.push(scaleRatingsUpFrom(data['question10'],3));
+		reusable.push(scaleRatingsUpFrom(data['question10'],3));
 	}
 	if('question11' in data) { //scale up from 3 options
-		trusted.push(scaleRatingsUpFrom(data['question11'],3));
+		accessible.push(scaleRatingsUpFrom(data['question11'],3));
 	}
 	if('question12' in data) { //scale up from 2 options
 		trusted.push(scaleRatingsUpFrom(data['question12'],2));
@@ -524,10 +525,10 @@ var calculateRatings = function(data) {
 		reusable.push(scaleRatingsUpFrom(data['question13'],3));
 	}
 	if('question14' in data) { //scale up from 2 options
-		reusable.push(scaleRatingsUpFrom(data['question14'],2));
+		trusted.push(scaleRatingsUpFrom(data['question14'],2));
 	}
 	if('question15' in data) { //scale up from 2 options
-		trusted.push(scaleRatingsUpFrom(data['question15'],2));
+		
 	}
 	if('question16' in data) {
 		
