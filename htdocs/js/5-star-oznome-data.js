@@ -35,19 +35,19 @@ var surveyJSON = {
        text: "File download"
       },
       {
-       value: "3.5",
+       value: "4",
        text: "Institutional or community repository"
       },
       {
-       value: "4",
+       value: "5",
        text: "Bespoke web service (informal API)"
       },
       {
-       value: "4.5",
+       value: "6",
        text: "Bespoke web service (OpenAPI/Swagger)"
       },
       {
-       value: "5",
+       value: "7",
        text: "Standard web service API (e.g. OGC)"
       }
      ],
@@ -68,23 +68,23 @@ var surveyJSON = {
        text: "Local identifier"
       },
       {
-       value: "2.5",
+       value: "3",
        text: "Web address (URL - not guaranteed stable)"
       },
       {
-       value: "3",
+       value: "4",
        text: "Persistent web identifier (URI)"
       }
      ],
      commentText: "5-star citeable",
-     name: "question4",
+     name: "question3",
      title: "Citeable - denoted using a formal identifier"
     },
     {
      type: "radiogroup",
      choices: [
       {
-       value: "0",
+       value: "1",
        text: "No metadata"
       },
       {
@@ -105,7 +105,7 @@ var surveyJSON = {
       }
      ],
      commentText: "5-star described",
-     name: "question3.5",
+     name: "question4",
      title: "Described - tagged with metadata"
     },
     {
@@ -129,7 +129,7 @@ var surveyJSON = {
       }
      ],
      commentText: "5-star findable",
-     name: "question3",
+     name: "question5",
      title: "Findable - indexed in a discovery system "
     }
    ],
@@ -155,7 +155,7 @@ var surveyJSON = {
       }
      ],
      commentText: "5-star loadable",
-     name: "question5",
+     name: "question6",
      title: "Loadable - represented using a common or community-endorsed (i.e. standard) format"
     },
     {
@@ -170,11 +170,11 @@ var surveyJSON = {
        text: "explicit schema or data model, formalized in DDL, XSD, DDI, RDFS, JSON-Schema, data-package or similar"
       },
       {
-       value: "4",
+       value: "3",
        text: "community-shared schema or data model , available from a standard location"
       }
      ],
-     name: "question6",
+     name: "question7",
      title: "Useable - structured using a discoverable, community-endorsed (standard?) schema or data model"
     },
     {
@@ -185,23 +185,23 @@ var surveyJSON = {
        text: "local field codes or labels"
       },
       {
-       value: "1.1",
+       value: "2",
        text: "labels with full text explanations"
       },
       {
-       value: "1.2",
+       value: "3",
        text: "community standard labels (e.g. CF Conventions, UCUM units)"
       },
       {
-       value: "2",
+       value: "4",
        text: "some fields linked to externally managed definitions"
       },
       {
-       value: "3",
+       value: "5",
        text: "all fields linked to standard, externally managed definitions"
       }
      ],
-     name: "question9",
+     name: "question8",
      title: "Comprehensible - supported with unambiguous definitions for all internal elements"
     },
     {
@@ -220,7 +220,7 @@ var surveyJSON = {
        text: "out-bound links to related data and definitions"
       }
      ],
-     name: "question7",
+     name: "question9",
      title: "Linked - to other data and definitions using public identifiers (e.g. URIs)"
     },
     {
@@ -235,11 +235,11 @@ var surveyJSON = {
        text: "license described in text"
       },
       {
-       value: "2.5",
+       value: "3",
        text: "link to a standard license (e.g. Creative Commons)"
       }
      ],
-     name: "question14",
+     name: "question10",
      title: "Licensed - conditions for re-use are available and clearly expressed"
     }
    ],
@@ -268,7 +268,7 @@ var surveyJSON = {
        text: "certified repository"
       }
      ],
-     name: "question8",
+     name: "question11",
      title: "Curated - commitment to ensuring the data is available long term"
     },
     {
@@ -287,7 +287,7 @@ var surveyJSON = {
        text: "part of series - regular scheduled updates"
       }
      ],
-     name: "question11",
+     name: "question12",
      title: "Updated - part of a regular data collection program or series, with clear maintenance arrangements and update schedule"
     },
     {
@@ -302,11 +302,11 @@ var surveyJSON = {
        text: "text lineage statement"
       },
       {
-       value: "2.5",
+       value: "3",
        text: "formal provenance trace (e.g. PROV-O)"
       }
      ],
-     name: "question12",
+     name: "question13",
      title: "Assessable - accompanied by, or linked to, a data-quality assessment and description of the origin and workflow that produced the data"
     },
     {
@@ -321,11 +321,11 @@ var surveyJSON = {
        text: "usage statistics available"
       },
       {
-       value: "2.5",
+       value: "3",
        text: "Clearly endorsed by reputable organization or framework"
       }
      ],
-     name: "question15",
+     name: "question14",
      title: "Trusted -  accompanied by, or linked to, information about how the data has been used, by whom, and how many times"
     }
    ],
@@ -486,28 +486,28 @@ var calculateRatings = function(data) {
 	}
 	
 	if('question2' in data) {
-		accessible.push(scaleRatingsUpFrom(data['question2'],5));		
+		accessible.push(scaleRatingsUpFrom(data['question2'],7));		
 	}
 	if('question3' in data) {
-		findable.push(scaleRatingsUpFrom(data['question3'],3)); //scale up from 3 options
+		findable.push(scaleRatingsUpFrom(data['question3'],4)); //scale up from 3 options
 	}
 	if('question4' in data) { //scale up from 3 options
-		reusable.push(scaleRatingsUpFrom(data['question4'],3));
-		findable.push(scaleRatingsUpFrom(data['question4'],3)); 
+		reusable.push(scaleRatingsUpFrom(data['question4'],5));
+		findable.push(scaleRatingsUpFrom(data['question4'],5)); 
 	}
 	if('question5' in data) { //scale up from 3 options
-		reusable.push(scaleRatingsUpFrom(data['question5'],3));
-		findable.push(scaleRatingsUpFrom(data['question5'],3)); 		
+		reusable.push(scaleRatingsUpFrom(data['question5'],4));
+		findable.push(scaleRatingsUpFrom(data['question5'],4)); 		
 	}
 	if('question6' in data) { //scale up from 4 options
-		interoperable.push(scaleRatingsUpFrom(data['question6'],4));		
+		interoperable.push(scaleRatingsUpFrom(data['question6'],3));		
 	}
 	if('question7' in data) { //scale up from 3 options
-		interoperable.push(scaleRatingsUpFrom(data['question7'],4));
-		reusable.push(scaleRatingsUpFrom(data['question7'],4));	
+		interoperable.push(scaleRatingsUpFrom(data['question7'],3));
+		reusable.push(scaleRatingsUpFrom(data['question7'],3));	
 	}
 	if('question8' in data) { //scale up from 3 options
-		interoperable.push(scaleRatingsUpFrom(data['question8'],3));		
+		interoperable.push(scaleRatingsUpFrom(data['question8'],5));		
 	}
 	if('question9' in data) { //scale up from 3 options
 		interoperable.push(scaleRatingsUpFrom(data['question9'],3));
@@ -516,16 +516,16 @@ var calculateRatings = function(data) {
 		reusable.push(scaleRatingsUpFrom(data['question10'],3));
 	}
 	if('question11' in data) { //scale up from 3 options
-		accessible.push(scaleRatingsUpFrom(data['question11'],3));
+		accessible.push(scaleRatingsUpFrom(data['question11'],4));
 	}
 	if('question12' in data) { //scale up from 2 options
-		trusted.push(scaleRatingsUpFrom(data['question12'],2));
+		trusted.push(scaleRatingsUpFrom(data['question12'],3));
 	}
 	if('question13' in data) { //scale up from 3 options
 		reusable.push(scaleRatingsUpFrom(data['question13'],3));
 	}
 	if('question14' in data) { //scale up from 2 options
-		trusted.push(scaleRatingsUpFrom(data['question14'],2));
+		trusted.push(scaleRatingsUpFrom(data['question14'],3));
 	}
 	if('question15' in data) { //scale up from 2 options
 		
@@ -599,7 +599,40 @@ var scaleRatingsUpFrom = function (rating, maxNumOptions) {
 		if(curr == 5) 
 			newVal = 5;
 	}
+	if(maxNumOptions == 6) {
+		newVal = curr;
+		if(curr == 1) 
+			newVal = 0;
+		if(curr == 2) 
+			newVal = 1;		
+		if(curr == 3) 
+			newVal = 2;	
+		if(curr == 4) 
+			newVal = 3;
+		if(curr == 5) 
+			newVal = 4;
+		if(curr == 6) 
+			newVal = 5;
+	}
 
+	if(maxNumOptions == 7) {
+		newVal = curr;
+		if(curr == 1) 
+			newVal = 0;
+		if(curr == 2) 
+			newVal = 1;		
+		if(curr == 3) 
+			newVal = 2;	
+		if(curr == 4) 
+			newVal = 3;
+		if(curr == 5) 
+			newVal = 3.5;
+		if(curr == 6) 
+			newVal = 4;
+		if(curr == 7) 
+			newVal = 5;
+	}
+	
 	return newVal;
 }
 
