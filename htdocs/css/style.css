@@ -33,3 +33,9 @@ html, body {
 	height: 100%;
 	
 }
+
+.oznome-stars-title {
+	text-align: left !important; 
+	padding-right: 10px !important;
+	margin-right: 10px !important;
+}

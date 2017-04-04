@@ -194,3 +194,20 @@ footer {
 .container .text-muted {
   margin: 20px 0;
 }
+
+/*
+.oznome-stars {
+	text-align: left;
+}
+.oznome-stars-title-col {
+	padding-left: 150px !important;
+}
+.oznome-stars-title {
+	text-align: left !important; 
+	padding-right: 10px !important;
+	margin-right: 10px !important;
+}
+*/
+.oznome-stars-title {
+	padding-right: 10px !important;
+}
