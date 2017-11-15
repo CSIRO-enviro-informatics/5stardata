@@ -1,3 +1,5 @@
+var API_HOST = 'http://localhost:3000'
+
 var surveyJSON = {
  pages: [
   {
@@ -430,6 +432,7 @@ function sendDataToServer(survey) {
   var values = dummyData
   let sum = values.reduce((previous, current) => current += previous);
   let avg = sum / values.length;
+
   
   //$( ".survey-results pre").text(resultAsString)
   
@@ -451,17 +454,91 @@ function sendDataToServer(survey) {
   //insertStarRatings(dummyData);   
   insertStarRatings(arrRating);   
   
-  //$( ".survey-results div#5star-average").text("Score: " + avg.toFixed(2));
+  $( ".survey-results div#5star-average").text("Overall score: " + avg.toFixed(2));
   var badgelink = "https://img.shields.io/badge/oznome%20data%20rating-" + avg.toFixed(2) + "%20stars-yellow.svg"
   $( ".survey-results div#5star-average").append("<img src='"+badgelink+"'>");
   $( ".survey-results div.dataset-title").append('<h3>'+dataset_name+'</h3>');
 
   
-  $(".survey-download ").html('<a href="data:' + datastr + '" download="data.json">download JSON</a>');
-  $(".survey-questions ").append("<input id=\"btnreRun\" type=\"button\" onclick='reRunSurvey();' value=\"Modify\">");
+ // $(".survey-download ").html('<a href="data:' + datastr + '" download="data.json">download JSON</a>');
+
+  if(numTimesUserCompletedSurvey == 0 && viewMode) {
+	displaySharableLink(dataRatingId);
+    $(".survey-end-learnmore ").append("<div>Learn more about the <a target=\'out\' href=\"https://confluence.csiro.au/display/OZNOME/Data+ratings\">rating scheme</a>.") 
+  }
+  else {
+	$(".survey-shareable-link ").empty();
+	$(".survey-end-learnmore ").empty();
+
+    $(".survey-questions ").append("<input id=\"btnreRun\" type=\"button\" onclick='reRunSurvey();' value=\"Modify\">");
+	$(".survey-shareable-link ").append("<input id=\"btnGetShareableLink\" type=\"button\" onclick='getShareableLink();' value=\"Click to get shareable link\">");
+    $(".survey-end-learnmore ").append("<div>Learn more about the <a target=\'out\' href=\"https://confluence.csiro.au/display/OZNOME/Data+ratings\">rating scheme</a>.") 
+  }
   
-  //alert(resultAsString); //send Ajax request to your web server.
+  numTimesUserCompletedSurvey  = numTimesUserCompletedSurvey + 1;
 };
+
+var resetShareableLink = function() {
+	$(".survey-shareable-link ").empty();
+	  $(".survey-end-learnmore ").empty();
+}
+
+var getShareableLink = function() {
+	var resultAsString = JSON.stringify(survey.data);
+    var dataset_name = "";
+    if('question1' in survey.data && 'dataset-name' in survey.data['question1']) {
+		dataset_name = survey.data['question1']['dataset-name'];
+    }
+	
+    var arrRating = calculateRatings(survey.data);
+    avg = calcAverage(arrRating);
+ 
+    $.ajax({ 
+      url: API_HOST + '/data-rating/', 
+	  type: "POST",
+	  data: { 
+	     name: dataset_name,
+		 data_rating: resultAsString
+	    }
+    })
+    .done(
+       function (a) { 
+         console.log(a);
+		 displaySharableLink(a["_id"]);
+
+	 }); 
+};
+
+var displaySharableLink  = function(id){
+	 var currpage = window.location.pathname;
+	 var link = currpage + '?view=' + id;
+   	 $(".survey-shareable-link ").empty();
+	 $(".survey-shareable-link ").append("<div>Shareable link: <a href=\"" + link + "\">" + link + "</a></div>");
+	 
+	 if(viewMode) {
+	    //also display time
+		strDate = String(Date(dataRatingObj.updatedAt))
+
+		//$(".survey-shareable-link ").append("<div>Last updated: " + strDate + "</div>");
+	 	
+	 }
+}
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
 
 var insertStarRatings = function (arrRating) {
 	var arrRatingCategories = ['findable', 'accessible', 'interoperable', 'reusable', 'trusted'];
@@ -683,17 +760,45 @@ var updateSurveyChart = function(ctx, data) {
 function reRunSurvey() {
 	var data = survey.data;
     survey.clear();
+	resetShareableLink();
+
 	//$('#surveyContainer').empty();
 	//survey = new Survey.Survey(surveyJSON, "surveyContainer");	
     //survey.onComplete.add(sendDataToServer);
 	survey.data = data;
-	
+	modifyMode = true;
     survey.render('survey');
-	
 	$("#btnreRun").remove();
 }
 
+var initialLoad = false;
+var viewMode = false;
+var modifyMode = false;
+var dataRatingId = '';
+var dataRatingObj = {};
+var numTimesUserCompletedSurvey = 0;
+
 $(this).ready(function() {
+    initialLoad = true;
+  
+    var viewDataRating = getUrlParameter('view');
+    if(viewDataRating) {
+	   viewMode = true;
+	   dataRatingId = viewDataRating;
+       console.log(viewDataRating);
+       $.getJSON(API_HOST + '/data-rating/' + viewDataRating, function(data) {
+         console.log(data); 
+		 dataRatingObj = data;
+         //console.log(JSON.parse('{"test":"abc"}')); 
+         surveydataobj =JSON.parse(data.data_rating) 
+		 console.log(surveydataobj); 
+	     survey.data = surveydataobj;
+		 
+         survey.render('survey');
+		 sendDataToServer(survey);
+       })
+
+    }
 
 	//Use onComplete event to save the data           
 	survey.onComplete.add(sendDataToServer);
