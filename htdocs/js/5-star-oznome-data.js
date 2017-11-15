@@ -1,4 +1,4 @@
-var API_HOST = 'http://localhost:3000'
+var API_HOST = 'https://oznome.csiro.au/5star-api'
 
 var surveyJSON = {
  pages: [
