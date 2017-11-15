@@ -1,4 +1,5 @@
 var API_HOST = 'https://oznome.csiro.au/5star-api'
+var PAGE_URL = 'https://oznome.csiro.au/5star'
 
 var surveyJSON = {
  pages: [
@@ -454,7 +455,7 @@ function sendDataToServer(survey) {
   //insertStarRatings(dummyData);   
   insertStarRatings(arrRating);   
   
-  $( ".survey-results div#5star-average").text("Overall score: " + avg.toFixed(2));
+  //$( ".survey-results div#5star-average").text("Overall score: " + avg.toFixed(2));
   var badgelink = "https://img.shields.io/badge/oznome%20data%20rating-" + avg.toFixed(2) + "%20stars-yellow.svg"
   $( ".survey-results div#5star-average").append("<img src='"+badgelink+"'>");
   $( ".survey-results div.dataset-title").append('<h3>'+dataset_name+'</h3>');
@@ -510,7 +511,8 @@ var getShareableLink = function() {
 };
 
 var displaySharableLink  = function(id){
-	 var currpage = window.location.pathname;
+	 //var currpage = window.location.pathname;
+	 var currpage = PAGE_URL;
 	 var link = currpage + '?view=' + id;
    	 $(".survey-shareable-link ").empty();
 	 $(".survey-shareable-link ").append("<div>Shareable link: <a href=\"" + link + "\">" + link + "</a></div>");
