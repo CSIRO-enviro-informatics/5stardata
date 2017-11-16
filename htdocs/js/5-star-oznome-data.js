@@ -1,4 +1,5 @@
 var API_HOST = 'https://oznome.csiro.au/5star-api'
+var PAGE_URL = 'https://oznome.csiro.au/5star'
 
 var surveyJSON = {
  pages: [
@@ -512,7 +513,8 @@ var getShareableLink = function() {
 };
 
 var displaySharableLink  = function(id){
-	 var currpage = window.location.pathname;
+	 //var currpage = window.location.pathname;
+	 var currpage = PAGE_URL;
 	 var link = currpage + '?view=' + id;
    	 $(".survey-shareable-link ").empty();
 	 $(".survey-shareable-link ").append("<div>Shareable link: <a href=\"" + link + "\">" + link + "</a></div>");
