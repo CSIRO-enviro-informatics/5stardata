@@ -422,7 +422,7 @@ Survey.Survey.cssType = "bootstrap";
 var survey = new Survey.Survey(surveyJSON, "surveyContainer");
 
 
-function sendDataToServer(survey) {
+function sendDataToServer(survey, isCompleted) {
   $( ".survey-results div#5star-average").empty();
   $( ".survey-results div.dataset-title").empty();
   var resultAsString = JSON.stringify(survey.data);
@@ -454,7 +454,7 @@ function sendDataToServer(survey) {
   //insertStarRatings(dummyData);   
   insertStarRatings(arrRating);   
   
-  $( ".survey-results div#5star-average").text("Overall score: " + avg.toFixed(2));
+  //$( ".survey-results div#5star-average").text("Overall score: " + avg.toFixed(2));
   var badgelink = "https://img.shields.io/badge/oznome%20data%20rating-" + avg.toFixed(2) + "%20stars-yellow.svg"
   $( ".survey-results div#5star-average").append("<img src='"+badgelink+"'>");
   $( ".survey-results div.dataset-title").append('<h3>'+dataset_name+'</h3>');
@@ -470,7 +470,9 @@ function sendDataToServer(survey) {
 	$(".survey-shareable-link ").empty();
 	$(".survey-end-learnmore ").empty();
 
-    $(".survey-questions ").append("<input id=\"btnreRun\" type=\"button\" onclick='reRunSurvey();' value=\"Modify\">");
+    if(isCompleted) {
+		  $(".survey-questions ").append("<input id=\"btnreRun\" type=\"button\" onclick='reRunSurvey();' value=\"Modify\">");
+  }
 	$(".survey-shareable-link ").append("<input id=\"btnGetShareableLink\" type=\"button\" onclick='getShareableLink();' value=\"Click to get shareable link\">");
     $(".survey-end-learnmore ").append("<div>Learn more about the <a target=\'out\' href=\"https://confluence.csiro.au/display/OZNOME/Data+ratings\">rating scheme</a>.") 
   }
@@ -624,9 +626,21 @@ var calculateRatings = function(data) {
 	
 }
 
+function notNull(val) { return val !== null; }
+function notUndefined(val) { return val !== 'undefined'; }
+
+
 var calcAverage = function (values) {
-	let sum = values.reduce((previous, current) => current += previous);
-    let avg = sum / values.length;
+	let len = values.length;
+	let arrValues = values
+	                  .filter(notNull)
+	                  .filter(notUndefined)
+	if(arrValues.length == 0) {
+		return 0;
+        }
+	let sum = arrValues
+		  .reduce((previous, current) => current += previous);
+    let avg = sum / len;
 	return avg;
 }
 
@@ -795,12 +809,19 @@ $(this).ready(function() {
 	     survey.data = surveydataobj;
 		 
          survey.render('survey');
-		 sendDataToServer(survey);
+		 sendDataToServer(survey, false);
        })
 
     }
 
 	//Use onComplete event to save the data           
-	survey.onComplete.add(sendDataToServer);
+	survey.onComplete.add(sendDataToServer, true);
+
+	survey.onValueChanged.add(function (sender, options) {
+		sendDataToServer(survey, false);
+	  //var mySurvey = sender;
+	  //var questionName = options.name;
+	  //var newValue = options.value;
+	});
 
 });
