@@ -1,0 +1,41 @@
+.navbar-default {
+	background-color: white !important;
+	border-color: white;
+}
+
+.navbar-brand {	
+	font-weight: 700;
+}
+
+.navbar-nav li {
+	width: 200px;
+}
+
+html, body {
+   height: 100%;
+   width : 100%;
+   margin: 0;
+   padding: 0;
+}
+
+.description {
+	margin-left: 10px;
+	margin-right: 10px;
+	min-height: 100%;
+}
+
+.self-assessment {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.survey-questions {
+	height: 100%;
+	
+}
+
+.oznome-stars-title {
+	text-align: left !important; 
+	padding-right: 10px !important;
+	margin-right: 10px !important;
+}
